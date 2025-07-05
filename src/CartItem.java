@@ -8,7 +8,9 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-
+    public Product getProduct() {
+        return product;
+    }
     public double price() {
         return product.getPrice() * quantity;
     }

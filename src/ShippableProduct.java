@@ -1,11 +1,12 @@
-public class ShippableProduct extends  Product implements IShippableProduct{
+public class ShippableProduct implements IShippableProduct{
     private double weight;
+    private String name;
 
-
-    public ShippableProduct(int id, String name, double price, int quantity, double weight) {
-        super(id, name, price, quantity);
+    public ShippableProduct(String name, double weight) {
+        this.name = name;
         this.weight = weight;
     }
+
 
     @Override
     public double getWeight() {
@@ -14,6 +15,6 @@ public class ShippableProduct extends  Product implements IShippableProduct{
 
     @Override
     public String getName() {
-        return super.getName();
+        return name;
     }
 }

@@ -1,10 +1,14 @@
-public class ExpirableProduct extends Product {
+public class ExpirableProduct implements IExpirable {
     private int expirationPeriod;
 
-    public ExpirableProduct(int id, String name, double price, int quantity,
-                            int expirationPeriod) {
-        super(id, name, price, quantity);
-        this.expirationPeriod = expirationPeriod;
+    public ExpirableProduct(int expirationPeriod) {
+
+         setExpirationPeriod(expirationPeriod);
+    }
+
+    @Override
+    public int getExpirationPeriod() {
+        return expirationPeriod;
     }
 
     public boolean isExpired() {

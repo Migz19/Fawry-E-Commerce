@@ -2,13 +2,38 @@ public class Product {
     private String name;
     private double price;
     private int quantity;
-    private  int id;
 
-    public Product(int id,String name, double price, int quantity) {
-        this.id = id;
+
+    private IShippableProduct shippable;
+    private IExpirable expirable;
+    public Product( String name, double price, int quantity,
+                   IShippableProduct shippable, IExpirable expirable) {
+
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.shippable = shippable;
+        this.expirable = expirable;
+    }
+
+
+    public boolean isExpired() {
+        if (expirable == null) return false;
+        return expirable.isExpired();
+    }
+
+
+    public double getShippableWeight() {
+        if (shippable == null)
+            throw new UnsupportedOperationException("This product is not shippable.");
+        return shippable.getWeight();
+    }
+    public boolean isShippable() {
+        return shippable != null;
+    }
+
+    public boolean isExpirable() {
+        return expirable != null;
     }
 
     public String getName() {

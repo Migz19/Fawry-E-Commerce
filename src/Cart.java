@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Cart {
-
+    private static final double RATE_PER_KG = 10.0;
     private ArrayList<CartItem> cartItems;
     private double totalPrice = 0;
     public Cart() {
@@ -16,21 +16,47 @@ public class Cart {
             cartItems.add(cartItem);
         }
     }
-
+    public double totalPackageWeight() {
+        double total = 0;
+        for (CartItem item : cartItems) {
+            Product p = item.getProduct();
+            if (p.isShippable()) {
+                total += p.getShippableWeight() * item.getQuantity();
+            }
+        }
+        return total;
+    }
     public void removeProduct(CartItem cartItem) {
         cartItems.remove(cartItem);
     }
 
     public double getTotalPrice() {
-
-        for (CartItem cartItem : cartItems) {
-            this.totalPrice += cartItem.price();
+        double total = 0;
+        for (CartItem item : cartItems) {
+            total += item.price();
         }
-        return this.totalPrice;
+        return total;
     }
 
     public ArrayList<CartItem> getItems() {
         return new ArrayList<>(cartItems);
+    }
+    public double getShippingFees() {
+        double fees = 0;
+        for (CartItem item : cartItems) {
+            Product p = item.getProduct();
+            if (p.isShippable()) {
+                double weight = 0;
+                try {
+                    weight = p.getShippableWeight();
+                } catch (Exception ignored) {
+
+                    continue;
+                }
+                fees += weight * item.getQuantity() * RATE_PER_KG;
+            }
+        }
+        return fees;
     }
 
 }
